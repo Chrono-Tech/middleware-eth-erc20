@@ -62,9 +62,19 @@ let init = async () => {
     
     // save ETC20 Events to DB
     await Promise.all(
-      _.map(filtered, (ev, index) => {
+      _.map(filtered, async (ev, index) => {
         if (!ev) return;
-        updateBalance(Erc20Contract, tx.logs[index].address, ev.payload);
+        
+        const result = await updateBalance(Erc20Contract, tx.logs[index].address, ev.payload);        
+        let addresses = _.chain(result).map(_.keys).flatten().value();
+
+        return await Promise.all(
+          addresses.map(account => 
+            channel.publish('events', `eth_erc20token_balance.${account}`, new Buffer(JSON.stringify(_.find(result, account)[account])))
+          )
+        )
+        .catch(err => console.log(err));
+
         ev.payload.save().catch(() => {});
       })
     );
