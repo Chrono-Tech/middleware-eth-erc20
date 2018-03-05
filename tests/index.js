@@ -82,7 +82,7 @@ describe('core/sc processor', function () {
         expect(await getBalanceForTCAddress(TC, accounts[0])).to.equal(900000);
         expect(await getBalanceForTCAddress(TC, accounts[1])).to.equal(100000);
     
-        await Promise.delay(15000);
+        await Promise.delay(20000);
         await expectAccountHasBalance(accounts[0], TC.address, 900000);
         await expectAccountHasBalance(accounts[1], TC.address, 100000);
       })(),
