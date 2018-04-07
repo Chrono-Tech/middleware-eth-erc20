@@ -50,5 +50,8 @@ The options are presented below:
 
 License
 ----
-MIT
+ [GNU AGPLv3](LICENSE)
 
+Copyright
+----
+LaborX PTY
